@@ -4,7 +4,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.loovcik.smVotifierExt.SMVotifierExt;
+import org.loovcik.smVotifierExt.SmVotifierAPI;
 import pl.ibcgames.smvotifier.Consts;
 import pl.ibcgames.smvotifier.Utils;
 import pl.ibcgames.smvotifier.Votifier;
@@ -76,5 +79,9 @@ public class Reward implements CommandExecutor {
         }
 
         Utils.executeCommands(this.plugin, sender);
+
+        if (sender instanceof Player player && SMVotifierExt.getInstance() != null) {
+            new SmVotifierAPI().addVote(player);
+        }
     }
 }

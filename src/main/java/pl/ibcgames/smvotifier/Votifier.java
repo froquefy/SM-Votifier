@@ -2,6 +2,7 @@ package pl.ibcgames.smvotifier;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.loovcik.smVotifierExt.SMVotifierExt;
 import pl.ibcgames.smvotifier.commands.Reload;
 import pl.ibcgames.smvotifier.commands.Reward;
 import pl.ibcgames.smvotifier.commands.Test;
@@ -18,6 +19,7 @@ public final class Votifier extends JavaPlugin {
 
     private static Vote vote;
     private static Reward reward;
+    private SMVotifierExt ext;
 
     @Override
     public void onEnable() {
@@ -35,6 +37,16 @@ public final class Votifier extends JavaPlugin {
         this.getCommand(Consts.COMMAND_REWARD_NAME).setExecutor(reward = new Reward(this));
         this.getCommand(Consts.COMMAND_TEST_NAME).setExecutor(new Test(this));
         this.getCommand(Consts.COMMAND_RELOAD_NAME).setExecutor(new Reload(this));
+
+        ext = new SMVotifierExt(this);
+        ext.enable();
+    }
+
+    @Override
+    public void onDisable() {
+        if (ext != null) {
+            ext.disable();
+        }
     }
 
     public Configuration getConfiguration() {

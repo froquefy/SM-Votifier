@@ -37,14 +37,23 @@ public class VotePlayer {
       this.votes.add(System.currentTimeMillis());
       this.plugin.addTotalVotes();
       this.save();
-      Bukkit.getServer().getPluginManager().callEvent(new PlayerVoteEvent(this));
+      this.fireVoteEvent();
    }
 
    public void addVote(Long time) {
       this.votes.add(time);
       this.plugin.addTotalVotes();
       this.save();
-      Bukkit.getServer().getPluginManager().callEvent(new PlayerVoteEvent(this));
+      this.fireVoteEvent();
+   }
+
+   private void fireVoteEvent() {
+      PlayerVoteEvent event = new PlayerVoteEvent(this);
+      if (Bukkit.isPrimaryThread()) {
+         Bukkit.getServer().getPluginManager().callEvent(event);
+      } else {
+         this.plugin.scheduleSync(() -> Bukkit.getServer().getPluginManager().callEvent(event));
+      }
    }
 
    public int count() {

@@ -65,6 +65,10 @@ public final class SMVotifierExt {
       return host.getDescription();
    }
 
+   public void scheduleSync(Runnable runnable) {
+      host.scheduleSync(runnable);
+   }
+
    public void enable() {
       Bukkit.getConsoleSender().sendMessage("[SMVotifierExt] " + ChatColor.YELLOW + "Author: " + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "Loovcik");
       Bukkit.getConsoleSender().sendMessage("[SMVotifierExt] " + ChatColor.YELLOW + "Version: " + ChatColor.GRAY + this.getDescription().getVersion());
